@@ -1,0 +1,49 @@
+/patients/{patient_id}/images:
+  post:
+    summary: "Bild für einen Patienten hochladen"
+    description: "Lädt ein Bild für einen bestimmten Patienten hoch."
+    tags:
+      - Bilder
+    parameters:
+      - name: patient_id
+        in: path
+        required: true
+        description: "Die ID des Patienten."
+        schema:
+          type: integer
+          example: 123
+    requestBody:
+      required: true
+      content:
+        multipart/form-data:
+          schema:
+            type: object
+            properties:
+              image_path:
+                type: string
+                format: binary
+                description: "Das hochzuladende Bild."
+    responses:
+      '201':
+        description: "Das Bild wurde erfolgreich hochgeladen."
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  example: "Bild erfolgreich hinzugefügt"
+                thumbnail_path:
+                  type: string
+                  example: "/uploads/123/thumbnail_image.jpg"
+      '400':
+        description: "Ungültige Bilddaten oder fehlendes Bild."
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                error:
+                  type: string
+                  example: "No image file provided"
