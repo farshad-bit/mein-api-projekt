@@ -1,0 +1,24 @@
+# Verzeichnisse der virtuellen Umgebung
+venv/
+env/
+
+# Cache-Dateien von Python
+__pycache__/
+*.pyc
+
+# Git-Dateien
+.git
+
+
+# Node-Module (falls vorhanden)
+node_modules/
+
+# Betriebssystem-Dateien
+.DS_Store
+Thumbs.db
+
+# Log-Dateien
+*.log
+
+APP_4/ssl/mysql.sock
+APP_4/ssl/
