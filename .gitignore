@@ -8,6 +8,7 @@ __pycache__/
 
 # Git-Dateien
 .git
+.env
 
 
 # Node-Module (falls vorhanden)
