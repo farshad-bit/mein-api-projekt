@@ -17,6 +17,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+        # Setze PYTHONPATH, um das Modul 'app' zu finden
+    - name: Set PYTHONPATH
+      run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
+
     # Set up Python
     - name: Set up Python
       uses: actions/setup-python@v2
