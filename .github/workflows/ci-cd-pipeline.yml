@@ -17,7 +17,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-        # Setze PYTHONPATH, um das Modul 'app' zu finden
+    # Set PYTHONPATH to find the 'app' module
     - name: Set PYTHONPATH
       run: echo "PYTHONPATH=$PYTHONPATH:$(pwd)" >> $GITHUB_ENV
 
@@ -33,12 +33,13 @@ jobs:
         python -m venv venv
         source venv/bin/activate
         pip install -r requirements.txt
-        pip install pytest 
+        pip install pytest
 
-    # Run tests
+    # Run tests inside virtual environment
     - name: Run tests
       run: |
-        pytest tests/
+        source venv/bin/activate  # Aktivieren der virtuellen Umgebung
+        pytest tests/  # Führe pytest innerhalb der Umgebung aus
 
   docker-build:
     needs: build
@@ -61,4 +62,3 @@ jobs:
       run: |
         docker build -t your-dockerhub-username/patient-api:latest .
         docker push your-dockerhub-username/patient-api:latest
-
