@@ -9,14 +9,19 @@ import os
 app = create_app('development')  # oder 'testing', 'production' je nach Bedarf
 
 
-# load_dotenv()  # Lädt die Variablen aus der .env-Datei
-# Lädt die Umgebungsvariablen aus der .env-Datei
-load_dotenv()
+# # load_dotenv()  # Lädt die Variablen aus der .env-Datei
+# # Lädt die Umgebungsvariablen aus der .env-Datei
+# load_dotenv()
 
-# Prüft, ob die Variablen geladen sind
-print(os.getenv("DATABASE_URL"))
-print(os.getenv("MYSQL_USER"))
-print(os.getenv("MYSQL_PASSWORD"))
+# # Prüft, ob die Variablen geladen sind
+# print(os.getenv("DATABASE_URL"))
+# print(os.getenv("MYSQL_USER"))
+# print(os.getenv("MYSQL_PASSWORD"))
+
+# Route für den Health-Check
+@app.route('/health')
+def health_check():
+    return "OK", 200
 
 # @app.route('/db-test')
 # def test_db_connection():
@@ -26,6 +31,10 @@ print(os.getenv("MYSQL_PASSWORD"))
 #         return f"Verbindung zur Datenbank erfolgreich! Ergebnis: {result.fetchone()}"
 #     except Exception as e:
 #         return f"Fehler bei der Verbindung zur Datenbank: {e}"
+
+
+
+
 
 if __name__ == '__main__':
     # Listet alle registrierten Routen auf
