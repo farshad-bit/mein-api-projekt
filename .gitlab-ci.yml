@@ -1,13 +1,21 @@
 stages:
   - build
   - test
+  - deploy
 
 build:
   stage: build
   script:
-    - pip install -r requirements.txt  # Installiere Abhängigkeiten
+    - pip install -r requirements.txt
 
 test:
   stage: test
   script:
-    - pytest  # Führe Tests mit pytest aus
+    - pytest
+
+deploy:
+  stage: deploy
+  script:
+    - docker build -t your-dockerhub-username/app_4:latest .
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push your-dockerhub-username/app_4:latest
