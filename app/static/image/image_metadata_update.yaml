@@ -1,0 +1,87 @@
+openapi: 3.0.0
+info:
+  title: "API zur Verwaltung von Bildmetadaten"
+  version: "1.0.0"
+  description: "Diese API ermöglicht das Aktualisieren von Bildmetadaten wie Datum, Beschreibung und Tags."
+
+servers:
+  - url: http://localhost:5000
+    description: "Lokale Entwicklungsumgebung"
+
+paths:
+  /images/{image_id}/metadata:
+    put:
+      summary: "Bildmetadaten aktualisieren"
+      description: "Aktualisiert die Metadaten eines Bildes, einschließlich Datum, Beschreibung und Tags."
+      tags:
+        - Bilder
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          description: "Die eindeutige ID des Bildes, dessen Metadaten aktualisiert werden sollen."
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        description: "Die zu aktualisierenden Metadaten des Bildes."
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                date_taken:
+                  type: string
+                  format: date-time
+                  description: "Das Datum, an dem das Bild aufgenommen wurde (Format: YYYY-MM-DD HH:MM:SS)."
+                  example: "2024-10-01 12:00:00"
+                description:
+                  type: string
+                  description: "Eine kurze Beschreibung des Bildes (max. 255 Zeichen)."
+                  example: "Urlaubsfoto am Strand."
+                tags:
+                  type: string
+                  description: "Tags, die dem Bild zugeordnet sind (max. 255 Zeichen)."
+                  example: "Urlaub, Strand, Sommer"
+      responses:
+        '200':
+          description: "Die Metadaten des Bildes wurden erfolgreich aktualisiert."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Bildmetadaten erfolgreich aktualisiert"
+        '400':
+          description: "Fehlerhafte Anfrage, z.B. ungültiges Datumsformat oder zu lange Beschreibung/Tags."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Ungültiges Datumsformat. Erwartet wird YYYY-MM-DD HH:MM:SS."
+        '404':
+          description: "Bild nicht gefunden."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Bild nicht gefunden"
+        '500':
+          description: "Interner Serverfehler beim Speichern der Metadaten."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Fehler beim Speichern der Metadaten"

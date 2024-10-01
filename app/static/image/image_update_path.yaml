@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: "API zur Verwaltung von Bildpfaden"
+  version: "1.0.0"
+  description: "Diese API ermöglicht die Aktualisierung des Pfads eines gespeicherten Bildes."
+
+servers:
+  - url: http://localhost:5000
+    description: "Lokale Entwicklungsumgebung"
+
+paths:
+  /images/{image_id}/update_path:
+    put:
+      summary: "Bildpfad aktualisieren"
+      description: "Aktualisiert den Pfad eines bestehenden Bildes und verschiebt die Datei an den neuen Pfad."
+      tags:
+        - Bilder
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          description: "Die eindeutige ID des Bildes, dessen Pfad aktualisiert werden soll."
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        required: true
+        description: "Neuer Pfad für das Bild, das aktualisiert werden soll."
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                image_path:
+                  type: string
+                  description: "Der neue Pfad für das Bild. Das Bild muss eine zulässige Dateiendung haben (png, jpg, jpeg, gif)."
+                  example: "/new_uploads/images/new_image.jpg"
+      responses:
+        '200':
+          description: "Der Bildpfad wurde erfolgreich aktualisiert und die Datei verschoben."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Bildpfad erfolgreich aktualisiert"
+        '400':
+          description: "Ungültige Anfrage oder Bildpfad."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Image path is required"
+        '404':
+          description: "Das alte Bild wurde nicht gefunden."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "File does not exist"
+        '500':
+          description: "Serverfehler beim Verschieben oder Aktualisieren des Bildpfads."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to move file: [Fehlerbeschreibung]"

@@ -1,0 +1,12 @@
+# Verwende das offizielle MySQL 5.7 Image als Basis
+FROM mysql:5.7
+
+# # Kopiere die benutzerdefinierte my.cnf in das Image
+# COPY mysql-init/my.cnf /etc/mysql/conf.d/my.cnf
+
+# # Setze die richtigen Berechtigungen für my.cnf
+# RUN chmod 644 /etc/mysql/conf.d/my.cnf
+
+# Standardkommando beibehalten
+CMD ["mysqld"]
+

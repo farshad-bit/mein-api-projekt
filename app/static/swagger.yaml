@@ -1,0 +1,24 @@
+openapi: 3.0.0
+info:
+  title: "API Documentation"
+  version: "1.0.0"
+
+paths:
+  /images/add:
+    $ref: './image/image_add.yaml'
+  /images/delete:
+    $ref: './image/image_delete.yaml'
+  /images/get:
+    $ref: './image/image_get.yaml'
+  /images/update_metadata:
+    $ref: './image/image_metadata_update.yaml'
+  /images/update_path:
+    $ref: './image/image_update_path.yaml'
+  /patients/create:
+    $ref: './patient/patient_create.yaml'
+  /patients/delete:
+    $ref: './patient/patient_delete.yaml'
+  /patients/get:
+    $ref: './patient/patient_get.yaml'
+  /patients/update:
+    $ref: './patient/patient_update.yaml'

@@ -1,0 +1,93 @@
+openapi: 3.0.0
+info:
+  title: "API zur Verwaltung von Patienten"
+  version: "1.0.0"
+  description: "Diese API ermöglicht das Erstellen, Abrufen und Verwalten von Patienten."
+
+servers:
+  - url: http://localhost:5000
+    description: "Lokale Entwicklungsumgebung"
+
+paths:
+  /patients:
+    post:
+      summary: "Einen neuen Patienten erstellen"
+      description: "Erstellt einen neuen Patienten mit den übergebenen Daten."
+      tags:
+        - Patienten
+      requestBody:
+        required: true
+        description: "Die Daten, die zur Erstellung des Patienten erforderlich sind."
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                first_name:
+                  type: string
+                  description: "Vorname des Patienten."
+                  example: "John"
+                last_name:
+                  type: string
+                  description: "Nachname des Patienten."
+                  example: "Doe"
+                title:
+                  type: string
+                  description: "Titel des Patienten (z. B. Herr, Frau, Dr.)."
+                  example: "Herr"
+                dob:
+                  type: string
+                  format: date
+                  description: "Geburtsdatum des Patienten (Format: YYYY-MM-DD)."
+                  example: "1985-10-20"
+                gender:
+                  type: string
+                  description: "Geschlecht des Patienten."
+                  example: "männlich"
+                physician:
+                  type: string
+                  description: "Name des betreuenden Arztes."
+                  example: "Dr. Müller"
+                ancestry:
+                  type: string
+                  description: "Abstammung oder ethnische Zugehörigkeit des Patienten."
+                  example: "europäisch"
+                inconsistency:
+                  type: boolean
+                  description: "Informationen zur Dateninkonsistenz, falls vorhanden."
+                  example: false
+                eyeid:
+                  type: string
+                  description: "Eindeutige Augen-ID des Patienten."
+                  example: "12345-ABCDE"
+      responses:
+        '201':
+          description: "Patient erfolgreich erstellt"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Patient erfolgreich erstellt"
+        '400':
+          description: "Ungültige Anfrage aufgrund von Validierungsfehlern oder falschem Datenformat."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid date format. Use YYYY-MM-DD."
+        '500':
+          description: "Datenbankfehler oder anderer Serverfehler."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Database error: [Fehlerbeschreibung]"

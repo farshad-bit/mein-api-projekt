@@ -1,0 +1,103 @@
+openapi: 3.0.0
+info:
+  title: "API zur Verwaltung von Patientenbildern"
+  version: "1.0.0"
+  description: "Diese API ermöglicht das Hochladen, Abrufen, Löschen und Verwalten von Patientenbildern."
+
+servers:
+  - url: http://localhost:5000
+    description: "Lokale Entwicklungsumgebung"
+
+paths:
+  /patients/{patient_id}/images:
+    get:
+      summary: "Liste der Bilder eines Patienten abrufen"
+      description: "Ruft alle Bilder eines Patienten anhand der Patienten-ID mit Paginierung ab."
+      tags:
+        - Bilder
+      parameters:
+        - name: patient_id
+          in: path
+          required: true
+          description: "Die eindeutige ID des Patienten."
+          schema:
+            type: integer
+            example: 123
+        - name: page
+          in: query
+          required: false
+          description: "Die Seitennummer der Paginierung."
+          schema:
+            type: integer
+            example: 1
+        - name: per_page
+          in: query
+          required: false
+          description: "Anzahl der Bilder pro Seite."
+          schema:
+            type: integer
+            example: 10
+      responses:
+        '200':
+          description: "Bilder erfolgreich abgerufen"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  page:
+                    type: integer
+                    example: 1
+                  per_page:
+                    type: integer
+                    example: 10
+                  total_pages:
+                    type: integer
+                    example: 5
+                  total_images:
+                    type: integer
+                    example: 50
+                  images:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 101
+                        url:
+                          type: string
+                          example: "http://localhost:5000/uploads/101/image.jpg"
+                        thumbnail_url:
+                          type: string
+                          example: "http://localhost:5000/uploads/101/thumbnail_image.jpg"
+        '400':
+          description: "Ungültige Anfrage oder Paginierungsparameter"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Ungültige Werte für page oder per_page"
+        '404':
+          description: "Keine Bilder für den Patienten gefunden"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Keine Bilder für den Patienten mit der ID 123 gefunden"
+        '500':
+          description: "Interner Serverfehler"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Ein unerwarteter Fehler ist aufgetreten"

@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: "API zur Verwaltung von Bildern"
+  version: "1.0.0"
+  description: "Diese API ermöglicht das Hochladen, Löschen und Verwalten von Bildern."
+
+servers:
+  - url: http://localhost:5000
+    description: "Lokale Entwicklungsumgebung"
+
+paths:
+  /images/{image_id}:
+    delete:
+      summary: "Bild und zugehöriges Thumbnail löschen"
+      description: "Löscht das Bild mit der angegebenen ID und entfernt auch das zugehörige Thumbnail, falls vorhanden."
+      tags:
+        - Bilder
+      parameters:
+        - name: image_id
+          in: path
+          required: true
+          description: "Die eindeutige ID des zu löschenden Bildes."
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Das Bild und das zugehörige Thumbnail wurden erfolgreich gelöscht."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Bild und Thumbnail erfolgreich gelöscht"
+        '400':
+          description: "Ungültiges Bildformat."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Invalid file format"
+        '404':
+          description: "Bild oder Thumbnail nicht gefunden."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Image not found"
+        '500':
+          description: "Serverfehler beim Löschen des Bildes oder Thumbnails."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Failed to delete file: Fehlerdetails"

@@ -1,0 +1,94 @@
+openapi: 3.0.0
+info:
+  title: "API zur Verwaltung von Patienten"
+  version: "1.0.0"
+  description: "Diese API ermöglicht das Erstellen, Abrufen, Löschen und Verwalten von Patienten."
+
+servers:
+  - url: http://localhost:5000
+    description: "Lokale Entwicklungsumgebung"
+
+paths:
+  /patients/{patient_id}:
+    get:
+      summary: "Patientendetails abrufen"
+      description: "Gibt die Details eines Patienten anhand der Patienten-ID zurück."
+      tags:
+        - Patienten
+      parameters:
+        - name: patient_id
+          in: path
+          required: true
+          description: "Die eindeutige ID des Patienten."
+          schema:
+            type: integer
+            example: 123
+      responses:
+        '200':
+          description: "Patient erfolgreich abgerufen"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 123
+                  first_name:
+                    type: string
+                    example: "John"
+                  last_name:
+                    type: string
+                    example: "Doe"
+                  title:
+                    type: string
+                    example: "Herr"
+                  dob:
+                    type: string
+                    format: date
+                    example: "1985-10-20"
+                  gender:
+                    type: string
+                    example: "männlich"
+                  physician:
+                    type: string
+                    example: "Dr. Müller"
+                  ancestry:
+                    type: string
+                    example: "europäisch"
+                  inconsistency:
+                    type: boolean
+                    example: false
+                  eyeid:
+                    type: string
+                    example: "12345-ABCDE"
+        '400':
+          description: "Ungültige Anfrage oder fehlerhafte Patienten-ID"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Ungültige Patienten-ID"
+        '404':
+          description: "Patient nicht gefunden"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Patient mit ID 123 nicht gefunden"
+        '500':
+          description: "Interner Serverfehler beim Abrufen des Patienten"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Fehler beim Abrufen des Patienten"

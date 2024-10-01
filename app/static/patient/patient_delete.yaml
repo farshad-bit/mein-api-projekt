@@ -1,0 +1,66 @@
+openapi: 3.0.0
+info:
+  title: "API zur Verwaltung von Patienten"
+  version: "1.0.0"
+  description: "Diese API ermöglicht das Erstellen, Abrufen, Löschen und Verwalten von Patienten."
+
+servers:
+  - url: http://localhost:5000
+    description: "Lokale Entwicklungsumgebung"
+
+paths:
+  /patients/{id}:
+    delete:
+      summary: "Einen Patienten löschen"
+      description: "Löscht einen Patienten anhand der Patienten-ID, falls der Patient keine zugehörigen Ressourcen hat."
+      tags:
+        - Patienten
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: "Die eindeutige ID des Patienten, der gelöscht werden soll."
+          schema:
+            type: integer
+            example: 1
+      responses:
+        '200':
+          description: "Patient erfolgreich gelöscht"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Patient mit ID 1 erfolgreich gelöscht"
+        '400':
+          description: "Patient kann nicht gelöscht werden, z.B. aufgrund von Abhängigkeiten wie zugehörigen Bildern."
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Patient kann nicht gelöscht werden, da zugehörige Ressourcen vorhanden sind."
+        '404':
+          description: "Patient nicht gefunden"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Patient mit ID 1 nicht gefunden"
+        '500':
+          description: "Interner Serverfehler beim Löschen des Patienten"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "Fehler beim Löschen des Patienten: [Fehlerbeschreibung]"
