@@ -18,10 +18,7 @@ app = create_app('development')  # oder 'testing', 'production' je nach Bedarf
 # print(os.getenv("MYSQL_USER"))
 # print(os.getenv("MYSQL_PASSWORD"))
 
-# Route für den Health-Check
-@app.route('/health')
-def health_check():
-    return "OK", 200
+
 
 # @app.route('/db-test')
 # def test_db_connection():

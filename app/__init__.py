@@ -76,4 +76,9 @@ def create_app(config_name='development'):
     # Swagger konfigurieren
     configure_swagger(app)
 
+    # Health-Check-Endpunkt hinzufügen
+    @app.route('/health', methods=['GET'])
+    def health_check():
+        return "OK", 200
+
     return app
