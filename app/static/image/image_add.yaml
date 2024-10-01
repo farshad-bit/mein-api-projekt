@@ -22,7 +22,7 @@ paths:
           description: "Die ID des Patienten."
           schema:
             type: integer
-            example: 123
+            example: 1
       requestBody:
         required: true
         content:
@@ -47,7 +47,7 @@ paths:
                     example: "Bild erfolgreich hinzugefügt"
                   thumbnail_path:
                     type: string
-                    example: "/uploads/123/thumbnail_image.jpg"
+                    example: "/uploads/1/thumbnail_image.jpg"
         '400':
           description: "Ungültige Bilddaten oder fehlendes Bild."
           content:
