@@ -22,7 +22,7 @@ paths:
           description: "Die ID des Patienten."
           schema:
             type: integer
-            example: 1
+            example: 123
       requestBody:
         required: true
         content:
