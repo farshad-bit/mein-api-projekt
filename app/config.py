@@ -35,7 +35,7 @@ class DevelopmentConfig(Config):
     """
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'mysql+pymysql://dev_user:new_password@app_4-db-1/db_name')  # Dev-Datenbank
-    SECRET_KEY = os.getenv('SECRET_KEY', 'devsecretkey')  # Korrekt die Umgebungsvariable
+    SECRET_KEY = os.getenv('SECRET_KEY', 'supersecretkey')  # Korrekt die Umgebungsvariable
 
 class TestConfig(Config):
     """
@@ -55,7 +55,7 @@ class ProductionConfig(Config):
     """
     Konfiguration für die Produktionsumgebung.
     """
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'mysql+pymysql://prod_user:new_password@app_4-db-1/prod_db')  # Prod-Datenbank
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', 'mysql+pymysql://dev_user:new_password@app_4-db-1/db_name')  # Prod-Datenbank
     SECRET_KEY = os.getenv('SECRET_KEY', 'supersecretkey')  # Dynamisch setzen, falls in Umgebungsvariablen vorhanden
 
     # Produktionsspezifische SQLAlchemy-Engine-Optionen
